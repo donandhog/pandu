@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <!-- Meta tag wajib untuk tampilan optimal di HP -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pandu Sriwedari - Wayang Orang</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome untuk Ikon -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: { DEFAULT: '#D4AF37', light: '#F3E5AB', dark: '#AA8C2C' },
+                        cream: { DEFAULT: '#FDFBF7', dark: '#F5F0E6' },
+                        brown: { DEFAULT: '#3B2F2F', light: '#5C4A4A' }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Sembunyikan scrollbar tapi tetap bisa di-scroll */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        html { scroll-behavior: smooth; }
+        body { color: #3B2F2F; }
+        
+        /* Gambar Latar Belakang Utama */
+        .bg-utama {
+            background-image: url('https://iili.io/na9O1kb.jpg');
+        }
+    </style>
+</head>
+<body class="antialiased relative">
+
+    <!-- LAPISAN BACKGROUND GLOBAL (Optimal untuk HP agar tidak lag saat scroll) -->
+    <div class="fixed inset-0 w-full h-full bg-utama bg-cover bg-center z-[-2]"></div>
+    
+    <!-- Navbar (Tetap di atas) -->
+    <nav class="fixed top-0 w-full bg-black/90 backdrop-blur-md z-50 text-gold-light border-b border-gold/20 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <img src="https://api.iconify.design/mdi:crown.svg?color=%23D4AF37" alt="Logo" class="w-8 h-8 md:w-10 md:h-10">
+                    <div>
+                        <h1 class="font-serif font-bold text-lg md:text-xl text-gold leading-tight">PANDU SRIWEDARI</h1>
+                        <p class="text-[10px] md:text-xs text-gray-300">Panduan Digital Pengunjung</p>
+                    </div>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex space-x-6 text-sm font-medium">
+                    <a href="#beranda" class="hover:text-gold transition flex items-center gap-2 py-2"><i class="fas fa-home"></i> Beranda</a>
+                    <a href="#jadwal" class="hover:text-gold transition flex items-center gap-2 py-2"><i class="fas fa-calendar-alt"></i> Jadwal</a>
+                    <a href="#tokoh" class="hover:text-gold transition flex items-center gap-2 py-2"><i class="fas fa-users"></i> Tokoh & Cerita</a>
+                    <a href="#tiket" class="hover:text-gold transition flex items-center gap-2 py-2"><i class="fas fa-ticket-alt"></i> Tiket</a>
+                </div>
+
+                <!-- Tombol Menu Mobile (Hamburger) -->
+                <div class="lg:hidden">
+                    <button id="mobile-menu-btn" class="text-gold hover:text-white p-2 focus:outline-none rounded-lg active:bg-gold/20 transition">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Dropdown Menu Mobile -->
+        <div id="mobile-menu" class="hidden absolute w-full bg-black/95 backdrop-blur-lg border-b border-gold/20 shadow-2xl transition-all origin-top">
+            <div class="px-4 pt-2 pb-6 space-y-1 text-base font-medium max-h-[80vh] overflow-y-auto">
+                <a href="#beranda" class="mobile-link block text-gold-light hover:text-gold hover:bg-gold/10 px-3 py-3 rounded-xl transition"><i class="fas fa-home w-8 text-center"></i> Beranda</a>
+                <a href="#jadwal" class="mobile-link block text-gold-light hover:text-gold hover:bg-gold/10 px-3 py-3 rounded-xl transition"><i class="fas fa-calendar-alt w-8 text-center"></i> Jadwal Pertunjukan</a>
+                <a href="#tokoh" class="mobile-link block text-gold-light hover:text-gold hover:bg-gold/10 px-3 py-3 rounded-xl transition"><i class="fas fa-users w-8 text-center"></i> Tokoh & Cerita</a>
+                <a href="#tiket" class="mobile-link block text-gold-light hover:text-gold hover:bg-gold/10 px-3 py-3 rounded-xl transition"><i class="fas fa-ticket-alt w-8 text-center"></i> Tiket & Kunjungan</a>
+                <a href="#galeri" class="mobile-link block text-gold-light hover:text-gold hover:bg-gold/10 px-3 py-3 rounded-xl transition"><i class="fas fa-images w-8 text-center"></i> Galeri</a>
+                <a href="#fasilitas" class="mobile-link block text-gold-light hover:text-gold hover:bg-gold/10 px-3 py-3 rounded-xl transition"><i class="fas fa-building w-8 text-center"></i> Fasilitas</a>
+                <a href="#lakon" class="mobile-link block text-gold-light hover:text-gold hover:bg-gold/10 px-3 py-3 rounded-xl transition"><i class="fas fa-book-open w-8 text-center"></i> Lakon</a>
+                <a href="#faq" class="mobile-link block text-gold-light hover:text-gold hover:bg-gold/10 px-3 py-3 rounded-xl transition"><i class="fas fa-question-circle w-8 text-center"></i> FAQ</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Beranda -->
+    <section id="beranda" class="relative pt-20 min-h-[90vh] md:min-h-screen flex items-center">
+        <!-- Overlay Gelap Khusus Beranda -->
+        <div class="absolute inset-0 z-0 bg-black/60 md:bg-black/70 backdrop-blur-[2px]"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 w-full text-white pt-10 pb-16">
+            <div class="max-w-2xl mx-auto md:mx-0 text-center md:text-left">
+                <h2 class="font-serif text-5xl sm:text-6xl md:text-7xl font-bold mb-4 md:mb-6 text-gold leading-[1.1] drop-shadow-lg">
+                    Pertunjukan<br><span class="text-white text-3xl sm:text-4xl md:text-5xl">Wayang Orang Sriwedari</span>
+                </h2>
+                <p class="text-base sm:text-lg md:text-xl text-gray-200 mb-8 md:mb-12 font-medium drop-shadow">
+                    Sajian seni pertunjukan tradisional yang memadukan drama, tari, karawitan, dan dialog berbahasa Jawa dengan nilai-nilai luhur budaya Nusantara.
+                </p>
+                
+                <!-- Category Cards - Responsif di HP -->
+                <div class="grid grid-cols-3 gap-2 md:gap-6 mb-8 md:mb-10">
+                    <div class="bg-black/40 backdrop-blur-md border border-gold/30 rounded-2xl p-3 md:p-5 text-center active:scale-95 transition cursor-pointer">
+                        <div class="w-10 h-10 md:w-14 md:h-14 mx-auto bg-gold/20 rounded-full flex items-center justify-center mb-2 md:mb-3">
+                            <i class="fas fa-theater-masks text-gold text-xl md:text-3xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-[11px] md:text-base leading-tight">Drama<br class="md:hidden"> Tradisional</h3>
+                    </div>
+                    <div class="bg-black/40 backdrop-blur-md border border-gold/30 rounded-2xl p-3 md:p-5 text-center active:scale-95 transition cursor-pointer">
+                        <div class="w-10 h-10 md:w-14 md:h-14 mx-auto bg-gold/20 rounded-full flex items-center justify-center mb-2 md:mb-3">
+                            <i class="fas fa-child text-gold text-xl md:text-3xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-[11px] md:text-base leading-tight">Tari<br class="md:hidden"> Klasik</h3>
+                    </div>
+                    <div class="bg-black/40 backdrop-blur-md border border-gold/30 rounded-2xl p-3 md:p-5 text-center active:scale-95 transition cursor-pointer">
+                        <div class="w-10 h-10 md:w-14 md:h-14 mx-auto bg-gold/20 rounded-full flex items-center justify-center mb-2 md:mb-3">
+                            <i class="fas fa-music text-gold text-xl md:text-3xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-[11px] md:text-base leading-tight">Karawitan<br class="md:hidden"> Live</h3>
+                    </div>
+                </div>
+                
+                <div class="inline-block bg-black/30 backdrop-blur-sm border-l-4 border-gold pl-4 pr-6 py-2 rounded-r-lg">
+                    <p class="italic text-gold-light text-sm md:text-base font-serif tracking-wide">"Melestarikan Warisan, Menghidupkan Cerita"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Jadwal Pertunjukan -->
+    <section id="jadwal" class="py-12 md:py-20 relative">
+        <!-- Overlay Terang -->
+        <div class="absolute inset-0 z-0 bg-cream/90 backdrop-blur-sm"></div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
+            <div class="text-center mb-8 md:mb-12">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-brown mb-3">Jadwal Pertunjukan</h2>
+                <p class="text-brown-light font-medium bg-white/70 inline-block px-5 py-1.5 rounded-full border border-gold/20 shadow-sm text-sm md:text-base">Wayang Orang Sriwedari</p>
+            </div>
+
+            <!-- Filter Bulan (Snap scroll di HP) -->
+            <div class="flex overflow-x-auto hide-scrollbar gap-2 mb-8 p-1.5 bg-white/50 backdrop-blur-md rounded-full w-max max-w-full mx-auto border border-gold/20 shadow-inner snap-x snap-mandatory">
+                <button class="snap-center shrink-0 px-5 md:px-6 py-2 md:py-2.5 rounded-full bg-gold text-white font-semibold text-xs md:text-sm shadow-md">Oktober 2026</button>
+                <button class="snap-center shrink-0 px-5 md:px-6 py-2 md:py-2.5 rounded-full text-brown-light hover:bg-white font-medium text-xs md:text-sm transition">November 2026</button>
+                <button class="snap-center shrink-0 px-5 md:px-6 py-2 md:py-2.5 rounded-full text-brown-light hover:bg-white font-medium text-xs md:text-sm transition">Desember 2026</button>
+                <button class="snap-center shrink-0 px-4 py-2 rounded-full text-brown-light hover:bg-white transition"><i class="fas fa-calendar-alt"></i></button>
+            </div>
+
+            <!-- Daftar Jadwal -->
+            <div class="space-y-4">
+                <!-- Jadwal 1 -->
+                <div class="bg-white/95 backdrop-blur-md rounded-2xl p-4 md:p-5 shadow-sm border border-gold/20 flex items-center gap-4 hover:shadow-md transition active:scale-[0.98]">
+                    <div class="bg-gold/10 rounded-xl min-w-[65px] h-[65px] md:min-w-[80px] md:h-[80px] flex flex-col items-center justify-center text-brown font-bold border border-gold/30 shrink-0">
+                        <span class="text-2xl md:text-3xl leading-none">12</span>
+                        <span class="text-xs md:text-sm font-medium text-gold-dark mt-1">Okt</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h4 class="font-bold text-base md:text-xl mb-1 truncate text-brown">Arjuna Wiwaha</h4>
+                        <div class="text-xs md:text-sm text-gray-500 space-y-1 md:space-y-1.5">
+                            <p class="flex items-center gap-2 truncate"><i class="far fa-clock w-4 text-gold shrink-0"></i> 19.30 - 21.30 WIB</p>
+                            <p class="flex items-center gap-2 truncate"><i class="fas fa-map-marker-alt w-4 text-gold shrink-0"></i> Gedung Sriwedari</p>
+                        </div>
+                    </div>
+                    <button class="hidden sm:flex bg-gold/20 text-gold-dark px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gold hover:text-white transition items-center gap-2 shrink-0">
+                        Detail <i class="fas fa-arrow-right text-xs"></i>
+                    </button>
+                    <!-- Icon panah untuk HP -->
+                    <button class="sm:hidden w-10 h-10 rounded-full bg-gold/10 text-gold-dark flex items-center justify-center shrink-0">
+                         <i class="fas fa-chevron-right text-sm"></i>
+                    </button>
+                </div>
+                
+                <!-- Jadwal 2 -->
+                <div class="bg-white/95 backdrop-blur-md rounded-2xl p-4 md:p-5 shadow-sm border border-gold/20 flex items-center gap-4 hover:shadow-md transition active:scale-[0.98]">
+                    <div class="bg-gold/10 rounded-xl min-w-[65px] h-[65px] md:min-w-[80px] md:h-[80px] flex flex-col items-center justify-center text-brown font-bold border border-gold/30 shrink-0">
+                        <span class="text-2xl md:text-3xl leading-none">19</span>
+                        <span class="text-xs md:text-sm font-medium text-gold-dark mt-1">Okt</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h4 class="font-bold text-base md:text-xl mb-1 truncate text-brown">Semar Mbangun</h4>
+                        <div class="text-xs md:text-sm text-gray-500 space-y-1 md:space-y-1.5">
+                            <p class="flex items-center gap-2 truncate"><i class="far fa-clock w-4 text-gold shrink-0"></i> 19.30 - 21.30 WIB</p>
+                            <p class="flex items-center gap-2 truncate"><i class="fas fa-map-marker-alt w-4 text-gold shrink-0"></i> Gedung Sriwedari</p>
+                        </div>
+                    </div>
+                     <button class="sm:hidden w-10 h-10 rounded-full bg-gold/10 text-gold-dark flex items-center justify-center shrink-0">
+                         <i class="fas fa-chevron-right text-sm"></i>
+                    </button>
+                </div>
+
+                <!-- Jadwal 3 -->
+                <div class="bg-white/95 backdrop-blur-md rounded-2xl p-4 md:p-5 shadow-sm border border-gold/20 flex items-center gap-4 hover:shadow-md transition active:scale-[0.98]">
+                    <div class="bg-gold/10 rounded-xl min-w-[65px] h-[65px] md:min-w-[80px] md:h-[80px] flex flex-col items-center justify-center text-brown font-bold border border-gold/30 shrink-0">
+                        <span class="text-2xl md:text-3xl leading-none">26</span>
+                        <span class="text-xs md:text-sm font-medium text-gold-dark mt-1">Okt</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h4 class="font-bold text-base md:text-xl mb-1 truncate text-brown">Srikandi</h4>
+                        <div class="text-xs md:text-sm text-gray-500 space-y-1 md:space-y-1.5">
+                            <p class="flex items-center gap-2 truncate"><i class="far fa-clock w-4 text-gold shrink-0"></i> 19.30 - 21.30 WIB</p>
+                            <p class="flex items-center gap-2 truncate"><i class="fas fa-map-marker-alt w-4 text-gold shrink-0"></i> Gedung Sriwedari</p>
+                        </div>
+                    </div>
+                     <button class="sm:hidden w-10 h-10 rounded-full bg-gold/10 text-gold-dark flex items-center justify-center shrink-0">
+                         <i class="fas fa-chevron-right text-sm"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center bg-white/60 backdrop-blur-md p-4 rounded-xl border border-gold/30 shadow-sm">
+                <p class="text-xs md:text-sm italic text-brown-light font-medium">"Saksikan agenda pertunjukan rutin Wayang Orang Sriwedari setiap bulan."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tokoh & Cerita -->
+    <section id="tokoh" class="py-12 md:py-20 relative">
+        <div class="absolute inset-0 z-0 bg-white/90 md:bg-white/85 backdrop-blur-md"></div>
+
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
+            <div class="mb-8 md:mb-12 text-center md:text-left">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-brown mb-2 md:mb-3">Tokoh & Cerita</h2>
+                <p class="text-brown-light font-medium bg-cream/70 inline-block px-5 py-1.5 rounded-full border border-gold/20 shadow-sm text-sm md:text-base">Mengenal Karakter Wayang Orang</p>
+            </div>
+
+            <!-- Karakter Nav (Snap scroll di HP) -->
+            <div class="flex overflow-x-auto hide-scrollbar gap-4 md:gap-6 mb-8 md:mb-10 pb-2 snap-x snap-mandatory">
+                <div class="snap-center shrink-0 flex flex-col items-center gap-2 cursor-pointer group min-w-[70px]">
+                    <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gold text-white flex items-center justify-center text-2xl md:text-3xl shadow-lg border-2 border-transparent transition-transform active:scale-95">
+                        <i class="fas fa-user-ninja"></i>
+                    </div>
+                    <span class="text-xs md:text-sm font-bold text-brown">Arjuna</span>
+                </div>
+                <!-- Karakter tidak aktif -->
+                <div class="snap-center shrink-0 flex flex-col items-center gap-2 cursor-pointer group min-w-[70px] opacity-60">
+                    <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-cream-dark text-gold-dark border-2 border-gold/30 flex items-center justify-center text-2xl md:text-3xl transition-transform active:scale-95">
+                        <i class="fas fa-female"></i>
+                    </div>
+                    <span class="text-xs md:text-sm font-medium text-brown">Srikandi</span>
+                </div>
+                <div class="snap-center shrink-0 flex flex-col items-center gap-2 cursor-pointer group min-w-[70px] opacity-60">
+                    <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-cream-dark text-gold-dark border-2 border-gold/30 flex items-center justify-center text-2xl md:text-3xl transition-transform active:scale-95">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <span class="text-xs md:text-sm font-medium text-brown">Bima</span>
+                </div>
+                <div class="snap-center shrink-0 flex flex-col items-center gap-2 cursor-pointer group min-w-[70px] opacity-60">
+                    <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-cream-dark text-gold-dark border-2 border-gold/30 flex items-center justify-center text-2xl md:text-3xl transition-transform active:scale-95">
+                        <i class="fas fa-chess-king"></i>
+                    </div>
+                    <span class="text-xs md:text-sm font-medium text-brown">Yudhistira</span>
+                </div>
+                 <div class="snap-center shrink-0 flex flex-col items-center gap-2 cursor-pointer group min-w-[70px] opacity-60">
+                    <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-cream-dark text-gold-dark border-2 border-gold/30 flex items-center justify-center text-2xl md:text-3xl transition-transform active:scale-95">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <span class="text-xs md:text-sm font-medium text-brown">Semar</span>
+                </div>
+            </div>
+
+            <!-- Featured Character Card -->
+            <div class="bg-white/90 backdrop-blur-md rounded-3xl overflow-hidden shadow-xl border border-gold/30 flex flex-col md:flex-row">
+                <div class="md:w-2/5 h-56 md:h-auto relative">
+                    <img src="https://iili.io/na9vKLQ.jpg" alt="Arjuna" class="w-full h-full object-cover">
+                    <!-- Gradient agar teks terbaca di HP -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent md:hidden"></div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent to-white hidden md:block"></div>
+                </div>
+                <div class="md:w-3/5 p-6 md:p-10 flex flex-col justify-center relative z-10 -mt-6 md:mt-0 bg-white md:bg-transparent rounded-t-3xl md:rounded-none">
+                    <h3 class="font-serif text-3xl md:text-4xl font-bold text-brown mb-1">Arjuna</h3>
+                    <p class="text-gold-dark font-semibold text-sm md:text-base mb-4 bg-gold/10 inline-block px-3 py-1 rounded-md w-max">Sang Kesatria Bijaksana</p>
+                    <p class="text-brown-light text-sm md:text-base leading-relaxed mb-6 text-justify md:text-left">
+                        Arjuna adalah salah satu tokoh utama dalam wiracarita Mahabharata. Dikenal sebagai ksatria yang gagah, cerdas, jelas hati, dan selalu mencari kebenaran. Dalam Wayang Orang Sriwedari, karakter Arjuna diperankan dengan gerak tari yang anggun.
+                    </p>
+                    
+                    <div>
+                        <h4 class="font-bold text-brown mb-3 text-xs md:text-sm uppercase tracking-wider">Nilai Karakter</h4>
+                        <div class="flex flex-wrap gap-2 md:gap-3">
+                            <span class="bg-cream border border-gold/30 px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-xs font-semibold text-brown flex items-center gap-2 shadow-sm">
+                                <i class="fas fa-shield-alt text-gold"></i> Keberanian
+                            </span>
+                            <span class="bg-cream border border-gold/30 px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-xs font-semibold text-brown flex items-center gap-2 shadow-sm">
+                                <i class="fas fa-brain text-gold"></i> Bijaksana
+                            </span>
+                            <span class="bg-cream border border-gold/30 px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-xs font-semibold text-brown flex items-center gap-2 shadow-sm">
+                                <i class="fas fa-heart text-gold"></i> Setia
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tiket & Kunjungan -->
+    <section id="tiket" class="py-12 md:py-20 relative">
+        <div class="absolute inset-0 z-0 bg-cream/95 backdrop-blur-md"></div>
+
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+            <!-- Header Banner -->
+            <div class="relative bg-black rounded-3xl overflow-hidden mb-8 h-40 md:h-64 flex items-end shadow-xl border border-gold/30">
+                <img src="https://iili.io/na9vJku.jpg" alt="Loket Sriwedari" class="absolute inset-0 w-full h-full object-cover opacity-60">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                <div class="relative z-10 p-5 md:p-8 w-full flex justify-between items-end">
+                    <div>
+                        <h2 class="font-serif text-2xl md:text-4xl font-bold text-white mb-1 md:mb-2 drop-shadow-md">Tiket & Kunjungan</h2>
+                        <p class="text-gold-light text-xs md:text-base drop-shadow">Rencanakan Kunjungan Anda</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid Tiket (1 kolom di HP, 2 kolom di Laptop) -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+                <!-- Info 1 -->
+                <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-5 md:p-6 shadow-md border border-gold/20">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center text-gold text-xl shrink-0">
+                            <i class="fas fa-ticket-alt"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-brown">Pembelian Tiket</h3>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-5">Dapatkan tiket pertunjukan online maupun langsung di lokasi loket (Go Show).</p>
+                    <button class="w-full bg-gold text-white font-bold py-3.5 rounded-xl hover:bg-gold-dark transition shadow-md flex justify-center items-center gap-2 active:scale-[0.98]">
+                        Beli Tiket Sekarang <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- Info 2 -->
+                <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-5 md:p-6 shadow-md border border-gold/20">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center text-gold text-xl shrink-0">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-brown">Harga Tiket</h3>
+                    </div>
+                    <div class="space-y-3.5 text-sm">
+                        <div class="flex justify-between items-center border-b border-gray-100 pb-2">
+                            <span class="text-gray-600 font-medium">Reguler</span>
+                            <span class="font-bold text-brown bg-cream-dark px-3 py-1 rounded-md">Rp 50.000</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-100 pb-2">
+                            <span class="text-gray-600 font-medium">Pelajar</span>
+                            <span class="font-bold text-brown bg-cream-dark px-3 py-1 rounded-md">Rp 25.000</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-100 pb-2">
+                            <span class="text-gray-600 font-medium">Wisatawan Asing</span>
+                            <span class="font-bold text-brown bg-cream-dark px-3 py-1 rounded-md">Rp 100.000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info 3 -->
+                <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-5 md:p-6 shadow-md border border-gold/20">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center text-gold text-xl shrink-0">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-brown">Cara Kunjungan</h3>
+                    </div>
+                    <ul class="space-y-3 text-sm text-gray-700 font-medium">
+                        <li class="flex items-center gap-3 bg-gray-50 p-2 rounded-lg border border-gray-100"><span class="w-7 h-7 rounded-full bg-gold text-white flex items-center justify-center font-bold text-xs shrink-0">1</span> Pilih jadwal pertunjukan</li>
+                        <li class="flex items-center gap-3 bg-gray-50 p-2 rounded-lg border border-gray-100"><span class="w-7 h-7 rounded-full bg-gold text-white flex items-center justify-center font-bold text-xs shrink-0">2</span> Beli tiket online/offline</li>
+                        <li class="flex items-center gap-3 bg-gray-50 p-2 rounded-lg border border-gray-100"><span class="w-7 h-7 rounded-full bg-gold text-white flex items-center justify-center font-bold text-xs shrink-0">3</span> Datang sesuai jadwal & Nikmati</li>
+                    </ul>
+                </div>
+
+                <!-- Info 4 -->
+                <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-5 md:p-6 shadow-md border border-gold/20 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center text-gold text-xl shrink-0">
+                                <i class="fas fa-headset"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-brown">Kontak & Rombongan</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-5">Layanan informasi kunjungan, pemesanan tiket rombongan, dan kerja sama event khusus.</p>
+                    </div>
+                    <button class="w-full bg-cream-dark text-brown font-bold py-3.5 rounded-xl border-2 border-gold/30 hover:bg-gold/20 transition flex justify-center items-center gap-2 active:scale-[0.98]">
+                        <i class="fab fa-whatsapp text-green-600 text-lg"></i> Hubungi CS
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeri -->
+    <section id="galeri" class="py-12 md:py-20 relative">
+         <div class="absolute inset-0 z-0 bg-white/95 backdrop-blur-md"></div>
+
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+            <div class="mb-6 md:mb-8 text-center md:text-left">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-brown mb-2">Galeri</h2>
+                <p class="text-brown-light font-medium bg-cream/70 inline-block px-5 py-1.5 rounded-full border border-gold/20 shadow-sm text-sm">Dokumentasi Keindahan Sriwedari</p>
+            </div>
+
+            <!-- Grid Galeri -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
+                <!-- Foto Utama -->
+                <div class="col-span-2 row-span-2 rounded-xl overflow-hidden group relative shadow-md">
+                    <img src="https://iili.io/na9v3Ij.jpg" alt="Panggung" class="w-full h-full object-cover min-h-[200px] md:min-h-[350px]">
+                    <div class="absolute inset-0 bg-black/20 group-active:bg-black/40 md:group-hover:bg-black/30 transition duration-300 flex items-center justify-center">
+                        <i class="fas fa-search-plus text-white text-3xl opacity-0 md:group-hover:opacity-100 transition"></i>
+                    </div>
+                </div>
+                <!-- Foto Tambahan -->
+                <div class="rounded-xl overflow-hidden group relative h-28 md:h-auto shadow-md">
+                    <img src="https://iili.io/na9vdmb.jpg" alt="Suasana" class="w-full h-full object-cover">
+                </div>
+                <div class="rounded-xl overflow-hidden group relative h-28 md:h-auto shadow-md">
+                    <img src="https://iili.io/na9vqBV.jpg" alt="Interior" class="w-full h-full object-cover">
+                </div>
+                <div class="col-span-2 md:col-span-1 rounded-xl overflow-hidden group relative h-32 md:h-auto shadow-md">
+                    <img src="https://iili.io/na9vBEB.jpg" alt="Penonton" class="w-full h-full object-cover">
+                </div>
+                <div class="col-span-2 md:col-span-1 rounded-xl overflow-hidden group relative h-32 md:h-auto shadow-md">
+                    <img src="https://iili.io/na9vCrP.jpg" alt="Pintu" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fasilitas -->
+    <section id="fasilitas" class="py-12 md:py-20 relative">
+        <div class="absolute inset-0 z-0 bg-cream/95 backdrop-blur-md"></div>
+
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+            <div class="mb-8 md:mb-10 text-center">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-brown mb-2">Fasilitas</h2>
+                <p class="text-brown-light font-medium bg-white/70 inline-block px-5 py-1.5 rounded-full border border-gold/20 text-sm">Kenyamanan Pengunjung</p>
+            </div>
+
+            <!-- Grid Fasilitas (2 kolom di HP) -->
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
+                <!-- Fasilitas Card -->
+                <div class="bg-white/90 p-2 md:p-3 rounded-2xl border border-gold/20 shadow-sm">
+                    <div class="rounded-xl overflow-hidden h-24 md:h-40 mb-2 relative">
+                        <img src="https://iili.io/na9vuTJ.jpg" alt="Panggung Utama" class="w-full h-full object-cover">
+                        <div class="absolute bottom-1 right-1 w-7 h-7 bg-gold text-white rounded-md flex items-center justify-center shadow">
+                            <i class="fas fa-theater-masks text-xs"></i>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-brown text-sm md:text-base px-1">Gedung Pertunjukan</h4>
+                </div>
+                
+                <div class="bg-white/90 p-2 md:p-3 rounded-2xl border border-gold/20 shadow-sm">
+                    <div class="rounded-xl overflow-hidden h-24 md:h-40 mb-2 relative">
+                        <img src="https://iili.io/na9v7Bp.jpg" alt="Ruang Tunggu" class="w-full h-full object-cover">
+                        <div class="absolute bottom-1 right-1 w-7 h-7 bg-gold text-white rounded-md flex items-center justify-center shadow">
+                            <i class="fas fa-couch text-xs"></i>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-brown text-sm md:text-base px-1">Ruang Tunggu VIP</h4>
+                </div>
+
+                <div class="bg-white/90 p-2 md:p-3 rounded-2xl border border-gold/20 shadow-sm">
+                    <div class="rounded-xl overflow-hidden h-24 md:h-40 mb-2 relative bg-gray-200">
+                        <!-- Menggunakan gambar fallback untuk area luar/pintu -->
+                        <img src="https://iili.io/na9vJku.jpg" alt="Area Parkir" class="w-full h-full object-cover">
+                        <div class="absolute bottom-1 right-1 w-7 h-7 bg-gold text-white rounded-md flex items-center justify-center shadow">
+                            <i class="fas fa-parking text-xs"></i>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-brown text-sm md:text-base px-1">Area Parkir Luas</h4>
+                </div>
+                
+                 <div class="bg-white/90 p-2 md:p-3 rounded-2xl border border-gold/20 shadow-sm">
+                    <div class="rounded-xl overflow-hidden h-24 md:h-40 mb-2 relative flex items-center justify-center bg-cream-dark">
+                        <i class="fas fa-restroom text-4xl text-gold/30"></i>
+                        <div class="absolute bottom-1 right-1 w-7 h-7 bg-gold text-white rounded-md flex items-center justify-center shadow">
+                            <i class="fas fa-restroom text-xs"></i>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-brown text-sm md:text-base px-1">Toilet Bersih</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lakon -->
+    <section id="lakon" class="py-12 md:py-20 relative">
+        <div class="absolute inset-0 z-0 bg-white/95 backdrop-blur-md"></div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
+            <div class="mb-8 text-center">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-brown mb-2">Daftar Lakon</h2>
+                <p class="text-brown-light font-medium bg-cream/70 inline-block px-5 py-1.5 rounded-full border border-gold/20 text-sm">Cerita Pilihan Wayang Orang</p>
+            </div>
+
+            <div class="space-y-3 md:space-y-4">
+                <!-- Card Lakon di HP (Gambar di kiri, teks di kanan) -->
+                <div class="bg-white rounded-2xl overflow-hidden flex shadow-sm border border-gold/20 active:bg-gray-50 transition">
+                    <div class="w-[100px] md:w-1/4 shrink-0">
+                        <img src="https://iili.io/na9v3Ij.jpg" alt="Arjuna Wiwaha" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-3 md:p-5 flex-1 flex items-center justify-between min-w-0">
+                        <div class="pr-2">
+                            <h4 class="font-bold text-brown text-base md:text-xl mb-1 truncate">Arjuna Wiwaha</h4>
+                            <p class="text-xs md:text-sm text-gray-500 line-clamp-2 leading-snug">Kisah perjalanan Arjuna dalam mencari kesempurnaan ilmu dan keteguhan hati di Gunung Indrakila.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl overflow-hidden flex shadow-sm border border-gold/20 active:bg-gray-50 transition">
+                    <div class="w-[100px] md:w-1/4 shrink-0">
+                        <img src="https://iili.io/na9vqBV.jpg" alt="Semar Mbangun" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-3 md:p-5 flex-1 flex items-center justify-between min-w-0">
+                        <div class="pr-2">
+                            <h4 class="font-bold text-brown text-base md:text-xl mb-1 truncate">Semar Mbangun</h4>
+                            <p class="text-xs md:text-sm text-gray-500 line-clamp-2 leading-snug">Kisah kebijaksanaan Semar dalam menjaga keseimbangan dunia dan membimbing ksatria.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-12 md:py-20 relative pb-24 md:pb-32">
+        <div class="absolute inset-0 z-0 bg-cream/95 backdrop-blur-md"></div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
+            <div class="mb-8 text-center">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-brown mb-2">FAQ</h2>
+                <p class="text-brown-light font-medium bg-white/70 inline-block px-5 py-1.5 rounded-full border border-gold/20 text-sm">Pertanyaan Sering Diajukan</p>
+            </div>
+
+            <!-- Kontainer FAQ dengan JavaScript terhubung -->
+            <div class="space-y-3">
+                <div class="bg-white/95 backdrop-blur-sm rounded-2xl border border-gold/30 overflow-hidden shadow-sm">
+                    <button class="faq-btn w-full px-5 py-4 text-left font-bold text-brown flex justify-between items-center bg-white active:bg-gold/5 transition focus:outline-none">
+                        <span class="flex items-center gap-3 text-sm md:text-base pr-4 leading-tight"><i class="fas fa-ticket-alt text-gold w-5 text-center shrink-0"></i> Bagaimana cara membeli tiket?</span>
+                        <i class="fas fa-chevron-down text-gray-400 text-sm transition-transform duration-300 shrink-0"></i>
+                    </button>
+                    <!-- Konten ini disembunyikan secara default (.hidden) -->
+                    <div class="faq-content hidden px-5 pb-5 pt-1 text-sm md:text-base text-gray-600 border-t border-gray-100 leading-relaxed bg-gray-50/50">
+                        Tiket dapat dibeli secara langsung di loket Gedung Wayang Orang Sriwedari (Go Show) mulai sore hari sebelum pertunjukan, atau melalui aplikasi/web mitra resmi jika tersedia.
+                    </div>
+                </div>
+
+                <div class="bg-white/95 backdrop-blur-sm rounded-2xl border border-gold/30 overflow-hidden shadow-sm">
+                    <button class="faq-btn w-full px-5 py-4 text-left font-bold text-brown flex justify-between items-center bg-white active:bg-gold/5 transition focus:outline-none">
+                        <span class="flex items-center gap-3 text-sm md:text-base pr-4 leading-tight"><i class="fas fa-language text-gold w-5 text-center shrink-0"></i> Bahasa apa yang digunakan dalam pementasan?</span>
+                        <i class="fas fa-chevron-down text-gray-400 text-sm transition-transform duration-300 shrink-0"></i>
+                    </button>
+                    <div class="faq-content hidden px-5 pb-5 pt-1 text-sm md:text-base text-gray-600 border-t border-gray-100 leading-relaxed bg-gray-50/50">
+                        Dialog pertunjukan menggunakan **Bahasa Jawa**. Namun, penonton tidak perlu khawatir karena disediakan layar terjemahan (subtitle) di samping panggung, serta jalan cerita mudah dipahami lewat ekspresi dan tarian.
+                    </div>
+                </div>
+                
+                 <div class="bg-white/95 backdrop-blur-sm rounded-2xl border border-gold/30 overflow-hidden shadow-sm">
+                    <button class="faq-btn w-full px-5 py-4 text-left font-bold text-brown flex justify-between items-center bg-white active:bg-gold/5 transition focus:outline-none">
+                        <span class="flex items-center gap-3 text-sm md:text-base pr-4 leading-tight"><i class="far fa-clock text-gold w-5 text-center shrink-0"></i> Berapa lama durasinya?</span>
+                        <i class="fas fa-chevron-down text-gray-400 text-sm transition-transform duration-300 shrink-0"></i>
+                    </button>
+                    <div class="faq-content hidden px-5 pb-5 pt-1 text-sm md:text-base text-gray-600 border-t border-gray-100 leading-relaxed bg-gray-50/50">
+                        Satu pementasan Wayang Orang biasanya berdurasi sekitar **1,5 hingga 2 jam**, dimulai tepat pada pukul 19.30 WIB.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-10 mb-4 flex justify-center text-center">
+                <p class="text-xs text-brown-light font-medium flex items-center gap-2">
+                    <img src="https://api.iconify.design/mdi:crown.svg?color=%23AA8C2C" alt="Logo" class="w-4 h-4 opacity-70">
+                    Pandu Sriwedari Digital
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- KODE JAVASCRIPT: Menghidupkan tombol-tombol agar interaktif -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            /* --- 1. LOGIKA MENU MOBILE (HAMBURGER) --- */
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+            const menuIcon = mobileBtn.querySelector('i');
+
+            // Buka/Tutup menu saat tombol garis tiga diklik
+            mobileBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                
+                // Ubah ikon dari Garis Tiga (Bars) menjadi Silang (X)
+                if (mobileMenu.classList.contains('hidden')) {
+                    menuIcon.classList.remove('fa-times');
+                    menuIcon.classList.add('fa-bars');
+                } else {
+                    menuIcon.classList.remove('fa-bars');
+                    menuIcon.classList.add('fa-times');
+                }
+            });
+
+            // Tutup otomatis saat link di dalam menu diklik
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    menuIcon.classList.remove('fa-times');
+                    menuIcon.classList.add('fa-bars');
+                });
+            });
+
+            /* --- 2. LOGIKA TANYA JAWAB (FAQ ACCORDION) --- */
+            const faqButtons = document.querySelectorAll('.faq-btn');
+            
+            faqButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Cari elemen jawaban tepat di bawah tombol yang diklik
+                    const content = this.nextElementSibling;
+                    const icon = this.querySelector('.fa-chevron-down');
+                    
+                    // Toggle class 'hidden' untuk memunculkan/menyembunyikan jawaban
+                    content.classList.toggle('hidden');
+                    
+                    // Putar ikon panah 180 derajat
+                    if(content.classList.contains('hidden')){
+                         icon.style.transform = 'rotate(0deg)';
+                    } else {
+                         icon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
