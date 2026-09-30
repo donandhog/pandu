@@ -2,25 +2,25 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <!-- Meta tag wajib untuk tampilan optimal di HP -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pandu Sriwedari - Wayang Orang</title>
+    <title>Pandu Sriwedari - Wayang Orang Surakarta</title>
     
     <!-- Tailwind CSS -->
-    <script src="https://tailwindcss.com"></script>
-    <!-- Font Awesome untuk Ikon -->
-    <link href="https://cloudflare.com" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Google Fonts -->
-    <link href="https://googleapis.com" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        gold: { DEFAULT: '#D4AF37', light: '#F3E5AB', dark: '#AA8C2C' },
+                        gold: { DEFAULT: '#D4AF37', light: '#F3E5AB', dark: '#AA8C2C', bright: '#FFD700' },
                         cream: { DEFAULT: '#FDFBF7', dark: '#F5F0E6' },
-                        brown: { DEFAULT: '#3B2F2F', light: '#5C4A4A' }
+                        brown: { DEFAULT: '#3B2F2F', light: '#5C4A4A' },
+                        royal: { red: '#8B0000', darkred: '#5C0000', gold: '#F1C40F' }
                     },
                     fontFamily: {
                         sans: ['Plus Jakarta Sans', 'sans-serif'],
@@ -31,121 +31,698 @@
         }
     </script>
     <style>
-        /* Sembunyikan scrollbar tapi tetap bisa di-scroll */
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 10px; }
+
         html { scroll-behavior: smooth; }
-        body { color: #3B2F2F; }
-        
-        /* Gambar Latar Belakang Utama */
-        .bg-utama {
-            background-image: url('https://iili.io');
+        body { color: #3B2F2F; background-color: #0c0a09; }
+
+        .fade-in { animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-zoom { animation: modalZoom 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes modalZoom {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .glow-gold {
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+        .glow-red {
+            box-shadow: 0 0 25px rgba(139, 0, 0, 0.6);
         }
     </style>
 </head>
-<body class="antialiased relative">
+<body class="antialiased relative min-h-screen">
 
-    <!-- LAPISAN BACKGROUND GLOBAL (Optimal untuk HP agar tidak lag saat scroll) -->
-    <div class="fixed inset-0 w-full h-full bg-utama bg-cover bg-center z-[-2]"></div>
+    <!-- Fixed Background Image from User Upload -->
+    <div class="fixed inset-0 w-full h-full bg-cover bg-center bg-no-repeat bg-fixed z-[-2]" style="background-image: url('https://iili.io/na9O1kb.jpg');"></div>
+    <div class="fixed inset-0 w-full h-full bg-gradient-to-b from-black/90 via-black/80 to-black/95 backdrop-blur-[2px] z-[-1]"></div>
     
-    <!-- Navbar (Tetap di atas) -->
-    <nav class="fixed top-0 w-full bg-black/90 backdrop-blur-md z-50 text-gold-light border-b border-gold/20 shadow-lg">
+    <nav class="fixed top-0 w-full bg-black/90 backdrop-blur-md z-50 text-gold-light border-b border-gold/40 shadow-2xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16 md:h-20">
-                <!-- Logo -->
                 <div class="flex items-center gap-3">
-                    <img src="https://iconify.design" alt="Logo" class="w-8 h-8 md:w-10 md:h-10">
+                    <img src="https://api.iconify.design/mdi:crown.svg?color=%23FFD700" alt="Logo" class="w-8 h-8 md:w-10 md:h-10 animate-pulse">
                     <div>
-                        <h1 class="font-serif font-bold text-lg md:text-xl text-gold leading-tight">PANDU SRIWEDARI</h1>
-                        <p class="text-[10px] md:text-xs text-gray-300">Panduan Digital Pengunjung</p>
+                        <h1 class="font-serif font-bold text-lg md:text-xl text-gold-bright leading-tight tracking-wider">PANDU SRIWEDARI</h1>
+                        <p class="text-[10px] md:text-xs text-amber-200/80">Panduan Digital Wayang Orang</p>
                     </div>
                 </div>
                 
-                <!-- Desktop Menu -->
-                <div class="hidden lg:flex space-x-6 text-sm font-medium">
-                    <a href="#beranda" class="hover:text-gold transition flex items-center gap-2 py-2"><i class="fas fa-home"></i> Beranda</a>
-                    <a href="#jadwal" class="hover:text-gold transition flex items-center gap-2 py-2"><i class="fas fa-calendar-alt"></i> Jadwal</a>
-                    <a href="#tokoh" class="hover:text-gold transition flex items-center gap-2 py-2"><i class="fas fa-users"></i> Tokoh & Cerita</a>
-                    <a href="#tiket" class="hover:text-gold transition flex items-center gap-2 py-2"><i class="fas fa-ticket-alt"></i> Tiket</a>
+                <div class="hidden lg:flex space-x-6 text-sm font-semibold">
+                    <a href="#beranda" class="hover:text-gold-bright transition flex items-center gap-2 py-2"><i class="fas fa-home text-gold"></i> Beranda</a>
+                    <a href="#sejarah" class="hover:text-gold-bright transition flex items-center gap-2 py-2"><i class="fas fa-landmark text-gold"></i> Sejarah</a>
+                    <a href="#jadwal" class="hover:text-gold-bright transition flex items-center gap-2 py-2"><i class="fas fa-calendar-alt text-gold"></i> Jadwal</a>
+                    <a href="#tokoh" class="hover:text-gold-bright transition flex items-center gap-2 py-2"><i class="fas fa-users text-gold"></i> Tokoh</a>
+                    <a href="#tiket" class="hover:text-gold-bright transition flex items-center gap-2 py-2"><i class="fas fa-ticket-alt text-gold"></i> Tiket</a>
+                    <a href="#galeri" class="hover:text-gold-bright transition flex items-center gap-2 py-2"><i class="fas fa-images text-gold"></i> Galeri</a>
+                    <a href="#fasilitas" class="hover:text-gold-bright transition flex items-center gap-2 py-2"><i class="fas fa-building text-gold"></i> Fasilitas</a>
                 </div>
 
-                <!-- Tombol Menu Mobile (Hamburger) -->
                 <div class="lg:hidden">
-                    <button id="mobile-menu-btn" class="text-gold hover:text-white p-2 focus:outline-none rounded-lg active:bg-gold/20 transition">
+                    <button id="mobile-menu-btn" class="text-gold hover:text-white p-2 focus:outline-none rounded-xl bg-gold/10 border border-gold/30 active:bg-gold/30 transition">
                         <i class="fas fa-bars text-2xl"></i>
                     </button>
                 </div>
             </div>
         </div>
         
-        <!-- Dropdown Menu Mobile -->
-        <div id="mobile-menu" class="hidden absolute w-full bg-black/95 backdrop-blur-lg border-b border-gold/20 shadow-2xl transition-all origin-top">
-            <div class="px-4 pt-2 pb-6 space-y-1 text-base font-medium max-h-[80vh] overflow-y-auto">
-                <a href="#beranda" class="mobile-link block text-gold-light hover:text-gold hover:bg-gold/10 px-3 py-3 rounded-xl transition"><i class="fas fa-home w-8 text-center"></i> Beranda</a>
-                <a href="#jadwal" class="mobile-link block text-gold-light hover:text-gold hover:bg-gold/10 px-3 py-3 rounded-xl transition"><i class="fas fa-calendar-alt w-8 text-center"></i> Jadwal Pertunjukan</a>
-                <a href="#tokoh" class="mobile-link block text-gold-light hover:text-gold hover:bg-gold/10 px-3 py-3 rounded-xl transition"><i class="fas fa-users w-8 text-center"></i> Tokoh & Cerita</a>
-                <a href="#tiket" class="mobile-link block text-gold-light hover:text-gold hover:bg-gold/10 px-3 py-3 rounded-xl transition"><i class="fas fa-ticket-alt w-8 text-center"></i> Tiket & Kunjungan</a>
-                <a href="#galeri" class="mobile-link block text-gold-light hover:text-gold hover:bg-gold/10 px-3 py-3 rounded-xl transition"><i class="fas fa-images w-8 text-center"></i> Galeri</a>
-                <a href="#fasilitas" class="mobile-link block text-gold-light hover:text-gold hover:bg-gold/10 px-3 py-3 rounded-xl transition"><i class="fas fa-building w-8 text-center"></i> Fasilitas</a>
-                <a href="#lakon" class="mobile-link block text-gold-light hover:text-gold hover:bg-gold/10 px-3 py-3 rounded-xl transition"><i class="fas fa-book-open w-8 text-center"></i> Lakon</a>
-                <a href="#faq" class="mobile-link block text-gold-light hover:text-gold hover:bg-gold/10 px-3 py-3 rounded-xl transition"><i class="fas fa-question-circle w-8 text-center"></i> FAQ</a>
+        <div id="mobile-menu" class="hidden absolute w-full bg-black/95 backdrop-blur-xl border-b border-gold/30 shadow-2xl transition-all origin-top">
+            <div class="px-4 pt-3 pb-6 space-y-1.5 text-sm font-medium max-h-[80vh] overflow-y-auto">
+                <a href="#beranda" class="mobile-link block text-gold-light hover:text-gold hover:bg-gold/15 px-3 py-3 rounded-xl transition"><i class="fas fa-home w-8 text-center text-gold"></i> Beranda</a>
+                <a href="#sejarah" class="mobile-link block text-gold-light hover:text-gold hover:bg-gold/15 px-3 py-3 rounded-xl transition"><i class="fas fa-landmark w-8 text-center text-gold"></i> Sejarah</a>
+                <a href="#jadwal" class="mobile-link block text-gold-light hover:text-gold hover:bg-gold/15 px-3 py-3 rounded-xl transition"><i class="fas fa-calendar-alt w-8 text-center text-gold"></i> Jadwal Pertunjukan</a>
+                <a href="#tokoh" class="mobile-link block text-gold-light hover:text-gold hover:bg-gold/15 px-3 py-3 rounded-xl transition"><i class="fas fa-users w-8 text-center text-gold"></i> Tokoh & Cerita</a>
+                <a href="#tiket" class="mobile-link block text-gold-light hover:text-gold hover:bg-gold/15 px-3 py-3 rounded-xl transition"><i class="fas fa-ticket-alt w-8 text-center text-gold"></i> Tiket & Kunjungan</a>
+                <a href="#galeri" class="mobile-link block text-gold-light hover:text-gold hover:bg-gold/15 px-3 py-3 rounded-xl transition"><i class="fas fa-images w-8 text-center text-gold"></i> Galeri Pertunjukan</a>
+                <a href="#fasilitas" class="mobile-link block text-gold-light hover:text-gold hover:bg-gold/15 px-3 py-3 rounded-xl transition"><i class="fas fa-building w-8 text-center text-gold"></i> Fasilitas Gedung</a>
             </div>
         </div>
     </nav>
 
-    <!-- Beranda -->
-    <section id="beranda" class="relative pt-20 min-h-[90vh] md:min-h-screen flex items-center">
-        <!-- Overlay Gelap Khusus Beranda -->
-        <div class="absolute inset-0 z-0 bg-black/60 md:bg-black/70 backdrop-blur-[2px]"></div>
+    <section id="beranda" class="relative pt-24 min-h-[90vh] md:min-h-screen flex items-center">
+        <div class="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 w-full text-white pt-6 pb-16">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div class="text-center lg:text-left">
+                    <span class="inline-block bg-gradient-to-r from-amber-600 to-amber-800 text-amber-200 border border-gold/50 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase mb-4 shadow-lg">
+                        <i class="fas fa-crown text-gold mr-1"></i> Warisan Budaya Surakarta
+                    </span>
+                    <h2 class="font-serif text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 text-gold-bright leading-[1.1] drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">
+                        Wayang Orang<br><span class="text-white text-3xl sm:text-4xl md:text-5xl">Sriwedari Surakarta</span>
+                    </h2>
+                    <p class="text-sm sm:text-base md:text-lg text-gray-200 mb-8 font-normal leading-relaxed drop-shadow">
+                        Sajian seni pertunjukan tradisional megah yang memadukan drama, tari klasik, karawitan live, dan dialog berbahasa Jawa dengan nilai-nilai luhur Nusantara.
+                    </p>
+                    
+                    <div class="grid grid-cols-3 gap-3 mb-8">
+                        <div class="bg-black/70 backdrop-blur-md border border-gold/40 rounded-2xl p-3 text-center glow-gold">
+                            <div class="w-10 h-10 md:w-12 md:h-12 mx-auto bg-gold/20 rounded-full flex items-center justify-center mb-2">
+                                <i class="fas fa-theater-masks text-gold-bright text-lg md:text-2xl"></i>
+                            </div>
+                            <h3 class="font-bold text-xs md:text-sm text-gold-light">Drama Tradisional</h3>
+                        </div>
+                        <div class="bg-black/70 backdrop-blur-md border border-gold/40 rounded-2xl p-3 text-center glow-gold">
+                            <div class="w-10 h-10 md:w-12 md:h-12 mx-auto bg-gold/20 rounded-full flex items-center justify-center mb-2">
+                                <i class="fas fa-child text-gold-bright text-lg md:text-2xl"></i>
+                            </div>
+                            <h3 class="font-bold text-xs md:text-sm text-gold-light">Tari Klasik</h3>
+                        </div>
+                        <div class="bg-black/70 backdrop-blur-md border border-gold/40 rounded-2xl p-3 text-center glow-gold">
+                            <div class="w-10 h-10 md:w-12 md:h-12 mx-auto bg-gold/20 rounded-full flex items-center justify-center mb-2">
+                                <i class="fas fa-music text-gold-bright text-lg md:text-2xl"></i>
+                            </div>
+                            <h3 class="font-bold text-xs md:text-sm text-gold-light">Karawitan Live</h3>
+                        </div>
+                    </div>
 
-        <div class="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 w-full text-white pt-10 pb-16">
-            <div class="max-w-2xl mx-auto md:mx-0 text-center md:text-left">
-                <h2 class="font-serif text-5xl sm:text-6xl md:text-7xl font-bold mb-4 md:mb-6 text-gold leading-[1.1] drop-shadow-lg">
-                    Pertunjukan<br><span class="text-white text-3xl sm:text-4xl md:text-5xl">Wayang Orang Sriwedari</span>
-                </h2>
-                <p class="text-base sm:text-lg md:text-xl text-gray-200 mb-8 md:mb-12 font-medium drop-shadow">
-                    Sajian seni pertunjukan tradisional yang memadukan drama, tari, karawitan, dan dialog berbahasa Jawa dengan nilai-nilai luhur budaya Nusantara.
-                </p>
-                
-                <!-- Category Cards - Responsif di HP -->
-                <div class="grid grid-cols-3 gap-2 md:gap-6 mb-8 md:mb-10">
-                    <div class="bg-black/40 backdrop-blur-md border border-gold/30 rounded-2xl p-3 md:p-5 text-center active:scale-95 transition cursor-pointer">
-                        <div class="w-10 h-10 md:w-14 md:h-14 mx-auto bg-gold/20 rounded-full flex items-center justify-center mb-2 md:mb-3">
-                            <i class="fas fa-theater-masks text-gold text-xl md:text-3xl"></i>
-                        </div>
-                        <h3 class="font-semibold text-[11px] md:text-base leading-tight">Drama<br class="md:hidden"> Tradisional</h3>
+                    <div class="flex flex-wrap justify-center lg:justify-start gap-4">
+                        <a href="#jadwal" class="bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white font-bold px-6 py-3.5 rounded-full shadow-lg border border-gold/50 flex items-center gap-2 transition active:scale-95">
+                            <i class="fas fa-calendar-day"></i> Lihat Jadwal & Sinopsis
+                        </a>
+                        <a href="https://wa.me/6281226518774" target="_blank" class="bg-green-600 hover:bg-green-500 text-white font-bold px-6 py-3.5 rounded-full shadow-lg flex items-center gap-2 transition active:scale-95">
+                            <i class="fab fa-whatsapp text-xl"></i> Reservasi WhatsApp
+                        </a>
                     </div>
-                    <div class="bg-black/40 backdrop-blur-md border border-gold/30 rounded-2xl p-3 md:p-5 text-center active:scale-95 transition cursor-pointer">
-                        <div class="w-10 h-10 md:w-14 md:h-14 mx-auto bg-gold/20 rounded-full flex items-center justify-center mb-2 md:mb-3">
-                            <i class="fas fa-child text-gold text-xl md:text-3xl"></i>
+                </div>
+
+                <div class="relative flex justify-center">
+                    <div class="relative w-full max-w-md rounded-3xl overflow-hidden border-4 border-gold/60 shadow-[0_0_30px_rgba(212,175,55,0.4)] bg-black">
+                        <img src="https://iili.io/na9O1kb.jpg" alt="Panggung Sriwedari" class="w-full h-80 sm:h-96 object-cover hover:scale-105 transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent flex items-end p-6">
+                            <div>
+                                <span class="bg-gold text-black font-bold text-[10px] uppercase px-2.5 py-1 rounded-md mb-2 inline-block">Pentas Reguler</span>
+                                <p class="text-white font-serif text-lg font-bold">Setiap Senin s.d Sabtu | Pkl. 19.30 WIB</p>
+                                <p class="text-xs text-gold-light mt-1"><i class="fas fa-map-marker-alt text-gold"></i> Gedung Wayang Orang Sriwedari Surakarta</p>
+                            </div>
                         </div>
-                        <h3 class="font-semibold text-[11px] md:text-base leading-tight">Seni Tari<br class="md:hidden"> Klasik</h3>
-                    </div>
-                    <div class="bg-black/40 backdrop-blur-md border border-gold/30 rounded-2xl p-3 md:p-5 text-center active:scale-95 transition cursor-pointer">
-                        <div class="w-10 h-10 md:w-14 md:h-14 mx-auto bg-gold/20 rounded-full flex items-center justify-center mb-2 md:mb-3">
-                            <i class="fas fa-music text-gold text-xl md:text-3xl"></i>
-                        </div>
-                        <h3 class="font-semibold text-[11px] md:text-base leading-tight">Seni Musik<br class="md:hidden"> Tradisional</h3>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Script JavaScript untuk Tombol Hamburger Menu di HP -->
+    <section id="sejarah" class="py-16 md:py-24 relative bg-black/80 backdrop-blur-md border-y border-gold/20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
+            <div class="text-center mb-10 md:mb-14">
+                <span class="text-gold text-xs font-bold uppercase tracking-widest bg-gold/10 px-4 py-1 rounded-full border border-gold/30">Arsip & Perjalanan</span>
+                <h2 class="font-serif text-3xl md:text-5xl font-bold text-gold-bright mt-3 mb-3 drop-shadow-md">Sejarah Wayang Orang Sriwedari</h2>
+                <p class="text-gray-300 text-sm md:text-base font-medium">Lebih dari Satu Abad Menjaga Warisan Budaya Jawa</p>
+            </div>
+
+            <div class="space-y-6 md:space-y-8 text-white">
+                <div class="bg-white/10 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-gold/30 shadow-2xl leading-relaxed text-sm md:text-base text-justify">
+                    <p>Wayang Orang Sriwedari adalah seni pertunjukan tradisional Jawa yang berkembang di Kota Surakarta. Pertunjukannya memadukan drama, tari, dialog, karawitan, tata rias, dan busana, dengan cerita yang bersumber terutama dari Ramayana dan Mahabharata.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white/10 backdrop-blur-xl rounded-3xl p-6 border border-gold/30 shadow-xl">
+                        <h3 class="font-bold text-lg text-gold mb-3 flex items-center gap-2"><i class="fas fa-clock text-gold text-xl"></i> Awal Perjalanan</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed text-justify mb-3">Memiliki sejarah lebih dari satu abad. Sumber resmi mencatat mulai pentas tetap di Taman Sriwedari pada tahun 1911 dengan nama Persatuan Wayang Orang Sriwedari.</p>
+                        <p class="text-gray-300 text-sm leading-relaxed text-justify">Sumber Pemprov Jateng menyebut pembentukannya pada 10 Juli 1910.</p>
+                    </div>
+
+                    <div class="bg-white/10 backdrop-blur-xl rounded-3xl p-6 border border-gold/30 shadow-xl">
+                        <h3 class="font-bold text-lg text-gold mb-3 flex items-center gap-2"><i class="fas fa-university text-gold text-xl"></i> Taman Sriwedari</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed text-justify">Awalnya di panggung terbuka, kemudian tahun 1918 dibuat panggung tertutup sederhana, dan pada 1920 dibangun gedung permanen.</p>
+                    </div>
+                    
+                    <div class="bg-white/10 backdrop-blur-xl rounded-3xl p-6 border border-gold/30 shadow-xl">
+                        <h3 class="font-bold text-lg text-gold mb-3 flex items-center gap-2"><i class="fas fa-star text-gold text-xl"></i> Masa Kejayaan</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed text-justify">Menjadi hiburan utama masyarakat luas. Para pemainnya berasal dari lingkungan keraton hingga seniman umum.</p>
+                    </div>
+
+                    <div class="bg-white/10 backdrop-blur-xl rounded-3xl p-6 border border-gold/30 shadow-xl">
+                        <h3 class="font-bold text-lg text-gold mb-3 flex items-center gap-2"><i class="fas fa-sync-alt text-gold text-xl"></i> Sriwedari Hari Ini</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed text-justify">Direvitalisasi pada tahun 2011 oleh pemerintah dan kini dicatat sebagai Warisan Budaya Tak Benda oleh Pemkot Surakarta.</p>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-amber-950/80 to-black/80 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-gold/50 shadow-2xl">
+                    <h3 class="font-bold text-xl text-gold-bright mb-5 flex items-center gap-2"><i class="fas fa-lightbulb text-gold text-2xl"></i> TAHUKAH ANDA?</h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex flex-col sm:flex-row gap-2 sm:gap-6 pb-2 border-b border-gold/20">
+                            <div class="font-bold text-gold w-32 shrink-0">1910 - 1911</div>
+                            <div class="text-gray-200">Tahun pembentukan & mulai pentas tetap di Taman Sriwedari.</div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-2 sm:gap-6 pb-2 border-b border-gold/20">
+                            <div class="font-bold text-gold w-32 shrink-0">1918 - 1920</div>
+                            <div class="text-gray-200">Pembangunan panggung tertutup hingga gedung permanen.</div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-2 sm:gap-6 pb-2 border-b border-gold/20">
+                            <div class="font-bold text-gold w-32 shrink-0">2011</div>
+                            <div class="text-gray-200">Revitalisasi besar-besaran fasilitas pertunjukan oleh pemerintah.</div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
+                            <div class="font-bold text-gold w-32 shrink-0">Hari Ini</div>
+                            <div class="text-gray-200">Warisan Budaya Tak Benda yang terus dilestarikan.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-black/90 backdrop-blur-xl rounded-3xl p-6 md:p-10 border border-gold/60 shadow-2xl text-center glow-gold">
+                    <i class="fas fa-heart text-red-500 text-3xl mb-4 animate-bounce"></i>
+                    <h3 class="font-bold text-xl text-gold-bright mb-4 uppercase tracking-widest">Pesan Untuk Penonton</h3>
+                    <blockquote class="text-gray-100 text-lg md:text-xl font-serif italic mb-6 leading-relaxed">
+                        “Lebih dari satu abad, panggung Sriwedari tidak hanya menyajikan cerita. Ia menjaga bahasa, tari, musik, busana, filosofi, dan nilai kehidupan Jawa agar tetap dikenal oleh generasi berikutnya.”
+                    </blockquote>
+                    <p class="text-sm md:text-base text-gray-300 font-medium">Menonton Wayang Orang Sriwedari berarti ikut menjadi bagian dari perjalanan panjang pelestarian budaya Surakarta.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="jadwal" class="py-16 md:py-24 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
+            <div class="text-center mb-8 md:mb-12">
+                <span class="text-gold text-xs font-bold uppercase tracking-widest bg-gold/10 px-4 py-1 rounded-full border border-gold/30">Agenda Pertunjukan</span>
+                <h2 class="font-serif text-3xl md:text-5xl font-bold text-gold-bright mt-3 mb-3 drop-shadow-md">Jadwal Lakon September 2026</h2>
+                <p class="text-gray-200 text-sm md:text-base font-medium">Klik pada jadwal lakon untuk melihat Sinopsis lengkap & Daftar Pemeran (Dapukan)</p>
+            </div>
+
+            <!-- TODAY FEATURED SHOW (ADANU BLAWU) -->
+            <div class="mb-6">
+                <div class="bg-gradient-to-r from-red-950 via-black to-amber-950 rounded-3xl p-6 md:p-8 border-2 border-gold glow-gold shadow-2xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-gold text-black font-extrabold text-xs uppercase px-4 py-1.5 rounded-bl-2xl tracking-widest shadow-md">
+                        <i class="fas fa-star text-red-700"></i> Pentas Tayang Hari Ini
+                    </div>
+                    <div class="flex flex-col md:flex-row items-center gap-6">
+                        <div class="bg-gold/20 rounded-2xl min-w-[90px] h-[90px] flex flex-col items-center justify-center text-gold-bright font-bold border-2 border-gold shadow-inner shrink-0">
+                            <span class="text-3xl leading-none">26</span>
+                            <span class="text-xs font-bold mt-1 uppercase">Sep</span>
+                        </div>
+                        <div class="flex-1 text-center md:text-left">
+                            <span class="text-amber-400 text-xs font-bold uppercase tracking-wider">Lakon Utama Hari Ini</span>
+                            <h3 class="font-serif text-2xl md:text-4xl font-extrabold text-white mt-1 mb-2 uppercase">Adanu Blawu</h3>
+                            <p class="text-xs md:text-sm text-gray-300 mb-4"><i class="far fa-clock text-gold mr-1"></i> Pkl. 19.30 WIB | <i class="fas fa-map-marker-alt text-gold ml-2 mr-1"></i> Gedung WO Sriwedari</p>
+                            <button onclick="openModal('Adanu Blawu', '26 September 2026', adanuBlawuSinopsis, adanuBlawuDapukan)" class="bg-gold hover:bg-gold-bright text-black font-bold px-6 py-2.5 rounded-full text-sm transition shadow-lg inline-flex items-center gap-2">
+                                <i class="fas fa-book-open"></i> Lihat Sinopsis & Pemeran (Dapukan) &rarr;
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[60vh] overflow-y-auto custom-scrollbar pr-2 pb-4">
+                <script>
+                    const adanuBlawuSinopsis = `INTRODUKSI: Duryudana ingkang sampun badhe pejah, tinenggan Krepa, Aswatama tung Banowati kang kalarapaken Kartamarma. Banowati nyaketi Duryudana, pejah. Banowati arsa mbengok sora kabungkem Swatama gya kabradhat Kartamarma oncat sungkawa.
+
+DAPUKAN / PEMERAN:
+- Duryudana: -
+- Kunarpa: Suyatno, Wiryanto
+- Kartamarma: Guntur Kusuma Widagdo, S.Sn
+- Aswatama: Mahesani Tunjung Seto, S.Sn
+- Banowati: Rahma Putri Parimita, S.Sn
+- Krepa: Abi Baskoro
+- Semar: Zamrut Harjo Jekti Wirutama
+- Gareng: Djoko Triantano
+- Petruk: Mujiono
+- Bagong: Heru Purwanto, S.Sn
+- Janaka: Irizal Suryanto, S.Pd
+- Kresna: Didik Wibowo
+- Puntadewa: Perdana Pandu Kumara, S.Sn
+- Drupadi: Erma Widiastuti, S.Sn
+- Kunthi: Noviana Eka Pertiwi, S.Sn
+- Werkudara: Risang Janurwendo, S.Sn
+- Srikandhi: Rukayah
+- Utari: Okky Warsilya Dwi Kusma
+- Sembadra: Milla Restu Wardati, S.Sn
+- Dalang: Ki Joko Pamungkas
+- Sutradara: Benedictus Billy Aldi Kusuma, S.Sn`;
+
+                    const adanuBlawuDapukan = `Duryudana: - | Kunarpa: Suyatno, Wiryanto | Kartamarma: Guntur Kusuma Widagdo, S.Sn | Aswatama: Mahesani Tunjung Seto, S.Sn | Banowati: Rahma Putri Parimita, S.Sn | Krepa: Abi Baskoro | Semar: Zamrut Harjo Jekti Wirutama | Gareng: Djoko Triantano | Petruk: Mujiono | Bagong: Heru Purwanto, S.Sn | Janaka: Irizal Suryanto, S.Pd | Kresna: Didik Wibowo | Puntadewa: Perdana Pandu Kumara, S.Sn | Drupadi: Erma Widiastuti, S.Sn | Kunthi: Noviana Eka Pertiwi, S.Sn | Werkudara: Risang Janurwendo, S.Sn | Srikandhi: Rukayah | Utari: Okky Warsilya Dwi Kusma | Sembadra: Milla Restu Wardati, S.Sn | Dalang: Ki Joko Pamungkas | Sutradara: Benedictus Billy Aldi Kusuma, S.Sn`;
+
+                    const lakonData = [
+                        { tgl: 1, nama: 'Dewi Mandarpaes' },
+                        { tgl: 2, nama: 'Antareja Edan' },
+                        { tgl: 3, nama: 'Boma Maling' },
+                        { tgl: 4, nama: 'Hardasangkara' },
+                        { tgl: 5, nama: 'Gandamana Luweng' },
+                        { tgl: 7, nama: 'Samba Lair' },
+                        { tgl: 8, nama: 'Sokawedha Trabaspati' },
+                        { tgl: 9, nama: 'Samba Rabi' },
+                        { tgl: 10, nama: 'Resi Wilumaya' },
+                        { tgl: 11, nama: 'Prabu Kenya Sri Pulama' },
+                        { tgl: 12, nama: 'Trijatha Duta' },
+                        { tgl: 14, nama: 'Sesaji Raja Soya' },
+                        { tgl: 15, nama: 'Alap-Alapan Kembang Ngawanti' },
+                        { tgl: 16, nama: 'Sindumurti' },
+                        { tgl: 17, nama: 'Naga Bandang' },
+                        { tgl: 18, nama: 'Lamunan' },
+                        { tgl: 19, nama: 'Satria Plangkawati' },
+                        { tgl: 21, nama: 'Alap-Alapan Murtiningrum' },
+                        { tgl: 22, nama: 'Janaka Kembar' },
+                        { tgl: 23, nama: 'Prabu Jathasura' },
+                        { tgl: 24, nama: 'Petruk Dadi Dukun' },
+                        { tgl: 25, nama: 'Jatining Katresnan' },
+                        { tgl: 28, nama: 'Sridenta Maling' },
+                        { tgl: 29, nama: 'Bambang Mayat Miring' },
+                        { tgl: 30, nama: 'Wahyu Manggala' },
+                    ];
+
+                    lakonData.forEach(l => {
+                        const defaultSinopsis = `Saksikan pementasan lakon ${l.nama} yang dibawakan secara memukau oleh para seniman Wayang Orang Sriwedari Surakarta, memadukan seni peran, karawitan live, dan tembang klasik Jawa.`;
+                        document.write(`
+                            <div onclick="openModal('${l.nama}', '${l.tgl} September 2026', '${defaultSinopsis}')" class="bg-black/80 backdrop-blur-md rounded-2xl p-3.5 shadow-md border border-gold/30 flex items-center gap-3 hover:bg-gold/20 hover:border-gold transition cursor-pointer group">
+                                <div class="bg-gold/10 rounded-xl min-w-[50px] h-[50px] flex flex-col items-center justify-center text-gold font-bold border border-gold/30 shrink-0 group-hover:bg-gold group-hover:text-black transition">
+                                    <span class="text-xl leading-none">${l.tgl}</span>
+                                    <span class="text-[9px] font-bold mt-0.5 uppercase">Sep</span>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-sm truncate text-white group-hover:text-gold uppercase">${l.nama}</h4>
+                                    <p class="text-[11px] text-gray-300 mt-0.5"><i class="far fa-clock text-gold"></i> 19.30 WIB <span class="text-gold font-semibold ml-2">Lihat Sinopsis &rarr;</span></p>
+                                </div>
+                            </div>
+                        `);
+                    });
+                </script>
+            </div>
+        </div>
+    </section>
+
+    <div id="synopsis-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/85 backdrop-blur-md cursor-pointer" onclick="closeModal()"></div>
+        <div class="relative w-full max-w-2xl bg-black border-2 border-gold rounded-3xl overflow-hidden shadow-2xl modal-zoom z-10 flex flex-col max-h-[85vh]">
+            <div class="bg-gradient-to-r from-amber-900 to-black p-5 border-b border-gold/50 flex justify-between items-center shrink-0">
+                <div>
+                    <h3 id="modal-title" class="font-serif font-bold text-xl md:text-2xl text-gold-bright uppercase">Judul Lakon</h3>
+                    <p id="modal-date" class="text-xs text-amber-200 mt-1 flex items-center gap-2"><i class="far fa-calendar-alt"></i> 1 September 2026</p>
+                </div>
+                <button onclick="closeModal()" class="w-8 h-8 bg-white/10 hover:bg-red-600 rounded-full text-white flex items-center justify-center transition">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-6 md:p-8 overflow-y-auto custom-scrollbar text-white">
+                <h4 class="font-bold text-gold text-sm uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <i class="fas fa-book-open"></i> Sinopsis & Pemeran (Dapukan)
+                </h4>
+                <p id="modal-desc" class="text-gray-200 text-sm md:text-base leading-relaxed whitespace-pre-line text-justify bg-white/5 p-4 rounded-2xl border border-gold/20">
+                    Isi sinopsis akan muncul di sini...
+                </p>
+                
+                <div class="mt-8">
+                    <a href="https://wa.me/6281226518774" target="_blank" class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-3.5 rounded-xl flex justify-center items-center gap-2 transition shadow-lg">
+                        <i class="fab fa-whatsapp text-xl"></i> Reservasi Tiket via WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="tokoh" class="py-16 md:py-24 relative bg-black/70 backdrop-blur-md border-y border-gold/20">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
+            <div class="mb-10 text-center">
+                <span class="text-gold text-xs font-bold uppercase tracking-widest bg-gold/10 px-4 py-1 rounded-full border border-gold/30">Karakter Pewayangan</span>
+                <h2 class="font-serif text-3xl md:text-5xl font-bold text-gold-bright mt-3 mb-3 drop-shadow-md">Tokoh & Cerita</h2>
+                <p class="text-gray-200 text-sm md:text-base font-medium">Pilih Karakter untuk Mengenal Lebih Jauh</p>
+            </div>
+
+            <!-- Tabs Character -->
+            <div class="flex overflow-x-auto hide-scrollbar gap-4 mb-8 pb-2 justify-start md:justify-center">
+                <div id="tab-arjuna" onclick="switchChar('arjuna')" class="char-tab shrink-0 flex flex-col items-center gap-2 cursor-pointer group min-w-[75px] opacity-100 transition-opacity">
+                    <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gold text-black flex items-center justify-center text-2xl shadow-lg border-2 border-white transition-transform active:scale-95 font-bold">
+                        <i class="fas fa-user-ninja"></i>
+                    </div>
+                    <span class="text-xs md:text-sm font-bold text-gold-bright">Arjuna</span>
+                </div>
+                <div id="tab-werkudara" onclick="switchChar('werkudara')" class="char-tab shrink-0 flex flex-col items-center gap-2 cursor-pointer group min-w-[75px] opacity-50 hover:opacity-100 transition-opacity">
+                    <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-black text-gold border-2 border-gold/50 flex items-center justify-center text-2xl shadow-lg transition-transform active:scale-95">
+                        <i class="fas fa-hand-rock"></i>
+                    </div>
+                    <span class="text-xs md:text-sm font-medium text-gray-300">Werkudara</span>
+                </div>
+                <div id="tab-srikandi" onclick="switchChar('srikandi')" class="char-tab shrink-0 flex flex-col items-center gap-2 cursor-pointer group min-w-[75px] opacity-50 hover:opacity-100 transition-opacity">
+                    <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-black text-gold border-2 border-gold/50 flex items-center justify-center text-2xl shadow-lg transition-transform active:scale-95">
+                        <i class="fas fa-female"></i>
+                    </div>
+                    <span class="text-xs md:text-sm font-medium text-gray-300">Srikandi</span>
+                </div>
+                <div id="tab-yudhistira" onclick="switchChar('yudhistira')" class="char-tab shrink-0 flex flex-col items-center gap-2 cursor-pointer group min-w-[75px] opacity-50 hover:opacity-100 transition-opacity">
+                    <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-black text-gold border-2 border-gold/50 flex items-center justify-center text-2xl shadow-lg transition-transform active:scale-95">
+                        <i class="fas fa-chess-king"></i>
+                    </div>
+                    <span class="text-xs md:text-sm font-medium text-gray-300">Yudhistira</span>
+                </div>
+                <div id="tab-semar" onclick="switchChar('semar')" class="char-tab shrink-0 flex flex-col items-center gap-2 cursor-pointer group min-w-[75px] opacity-50 hover:opacity-100 transition-opacity">
+                    <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-black text-gold border-2 border-gold/50 flex items-center justify-center text-2xl shadow-lg transition-transform active:scale-95">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <span class="text-xs md:text-sm font-medium text-gray-300">Semar</span>
+                </div>
+            </div>
+
+            <!-- Content Cards -->
+            <div id="character-container" class="relative text-white">
+                <!-- Arjuna -->
+                <div id="content-arjuna" class="char-content bg-black/80 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl border border-gold/40 flex flex-col md:flex-row fade-in block">
+                    <div class="md:w-2/5 h-80 md:h-auto relative">
+                        <img src="https://iili.io/nadh6AJ.jpg" alt="Arjuna" class="w-full h-full object-cover">
+                    </div>
+                    <div class="md:w-3/5 p-6 md:p-10 flex flex-col justify-center">
+                        <h3 class="font-serif text-3xl md:text-4xl font-bold text-gold-bright mb-1">Arjuna</h3>
+                        <p class="text-amber-300 font-semibold text-sm mb-4 bg-gold/10 border border-gold/30 inline-block px-3 py-1 rounded-md w-max">Sang Kesatria Bijaksana</p>
+                        <p class="text-gray-200 text-sm md:text-base leading-relaxed mb-6 text-justify">
+                            Arjuna adalah salah satu tokoh utama dalam wiracarita Mahabharata. Dikenal sebagai ksatria yang gagah, cerdas, jelas hati, dan selalu mencari kebenaran.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Werkudara -->
+                <div id="content-werkudara" class="char-content bg-black/80 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl border border-gold/40 flex flex-col md:flex-row fade-in hidden">
+                    <div class="md:w-2/5 h-80 md:h-auto relative">
+                        <img src="https://iili.io/naJv9kX.jpg" alt="Werkudara" class="w-full h-full object-cover">
+                    </div>
+                    <div class="md:w-3/5 p-6 md:p-8 flex flex-col justify-center">
+                        <h3 class="font-serif text-2xl md:text-4xl font-bold text-gold-bright mb-1 uppercase">Werkudara</h3>
+                        <p class="text-amber-300 font-semibold text-xs md:text-sm mb-3 bg-gold/10 border border-gold/30 inline-block px-3 py-1 rounded-md w-max">Ksatria Kuat, Teguh & Berani</p>
+                        <div class="max-h-[250px] overflow-y-auto hide-scrollbar space-y-2 text-xs md:text-sm text-gray-200 pr-2 text-justify">
+                            <p>Werkudara atau Bima adalah salah satu anggota Pandawa Lima, putra Prabu Pandu dan Dewi Kunti. Ia dikenal sebagai ksatria bertubuh besar, kuat, pemberani, dan memiliki pendirian yang teguh.</p>
+                            <p class="font-semibold text-gold">🛡️ Karakter:</p>
+                            <p>Berani menghadapi bahaya, tegas, jujur apa adanya, setia, pantang menyerah, dan bertanggung jawab.</p>
+                            <p class="font-semibold text-gold">⚔️ Ciri Khas:</p>
+                            <p>Kuku Pancanaka dan senjata Gada Rujakpala.</p>
+                            <p class="font-semibold text-gold">📖 Lakon Dewa Ruci:</p>
+                            <p>Kisah pencarian Tirta Perwitasari yang mengajarkan pengetahuan sejati dan mengenal diri sendiri.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Srikandi -->
+                <div id="content-srikandi" class="char-content bg-black/80 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl border border-gold/40 flex flex-col md:flex-row fade-in hidden">
+                    <div class="md:w-2/5 h-80 md:h-auto relative">
+                        <img src="https://iili.io/nade8v9.jpg" alt="Srikandi" class="w-full h-full object-cover">
+                    </div>
+                    <div class="md:w-3/5 p-6 md:p-10 flex flex-col justify-center">
+                        <h3 class="font-serif text-3xl md:text-4xl font-bold text-gold-bright mb-1">Srikandi</h3>
+                        <p class="text-amber-300 font-semibold text-sm mb-4 bg-gold/10 border border-gold/30 inline-block px-3 py-1 rounded-md w-max">Prajurit Wanita Tangguh</p>
+                        <p class="text-gray-200 text-sm md:text-base leading-relaxed mb-6 text-justify">
+                            Srikandi adalah pahlawan wanita yang gagah berani, tangkas memanah, dan berjiwa luhur. Simbol emansipasi dan keberanian wanita di medan perang Baratayuda.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Yudhistira -->
+                <div id="content-yudhistira" class="char-content bg-black/80 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl border border-gold/40 flex flex-col md:flex-row fade-in hidden">
+                    <div class="md:w-2/5 h-80 md:h-auto relative">
+                        <img src="https://iili.io/na2fT8v.jpg" alt="Yudhistira" class="w-full h-full object-cover object-top">
+                    </div>
+                    <div class="md:w-3/5 p-6 md:p-10 flex flex-col justify-center">
+                        <h3 class="font-serif text-3xl md:text-4xl font-bold text-gold-bright mb-1">Yudhistira</h3>
+                        <p class="text-amber-300 font-semibold text-sm mb-4 bg-gold/10 border border-gold/30 inline-block px-3 py-1 rounded-md w-max">Sang Pemimpin Suci</p>
+                        <p class="text-gray-200 text-sm md:text-base leading-relaxed mb-6 text-justify">
+                            Yudhistira atau Puntadewa adalah anak sulung Pandawa. Dikenal memiliki darah putih yang melambangkan kesucian, kejujuran, dan sifat pemaaf yang luar biasa.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Semar -->
+                <div id="content-semar" class="char-content bg-black/80 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl border border-gold/40 flex flex-col md:flex-row fade-in hidden">
+                    <div class="md:w-2/5 h-80 md:h-auto relative">
+                        <img src="https://iili.io/nadw2ea.jpg" alt="Semar" class="w-full h-full object-cover">
+                    </div>
+                    <div class="md:w-3/5 p-6 md:p-10 flex flex-col justify-center">
+                        <h3 class="font-serif text-3xl md:text-4xl font-bold text-gold-bright mb-1">Semar</h3>
+                        <p class="text-amber-300 font-semibold text-sm mb-4 bg-gold/10 border border-gold/30 inline-block px-3 py-1 rounded-md w-max">Pamong Para Kesatria</p>
+                        <p class="text-gray-200 text-sm md:text-base leading-relaxed mb-6 text-justify">
+                            Tokoh Punakawan yang paling dihormati. Penjelmaan dewa (Ismaya) yang bertugas membimbing para ksatria menuju kebenaran dan keseimbangan alam.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tiket" class="py-16 md:py-24 relative">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+            <div class="relative bg-black rounded-3xl overflow-hidden mb-10 h-48 md:h-64 flex items-end shadow-2xl border-2 border-gold/60">
+                <img src="https://iili.io/na9v7Bp.jpg" alt="Loket Sriwedari" class="absolute inset-0 w-full h-full object-cover opacity-60">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                <div class="relative z-10 p-6 md:p-10 w-full flex justify-between items-end">
+                    <div>
+                        <span class="text-gold text-xs font-bold uppercase tracking-widest bg-gold/20 px-3 py-1 rounded-md">Informasi Resmi</span>
+                        <h2 class="font-serif text-3xl md:text-4xl font-bold text-white mt-2 mb-1 drop-shadow-lg">Tiket & Kunjungan</h2>
+                        <p class="text-gold-light text-xs md:text-base drop-shadow-md">Rencanakan Kunjungan Anda ke Wayang Orang Sriwedari</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-black/85 backdrop-blur-xl rounded-3xl p-6 md:p-8 shadow-xl border border-gold/40 text-white">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-gold/20 rounded-full flex items-center justify-center text-gold text-xl shrink-0 border border-gold/30">
+                            <i class="fas fa-ticket-alt"></i>
+                        </div>
+                        <h3 class="font-bold text-xl text-gold-bright">Pembelian Tiket & Reservasi</h3>
+                    </div>
+                    <p class="text-sm text-gray-300 mb-3">Reservasi tiket (Hari Senin - Sabtu Pkl. 08.00 - 16.00 WIB) atau langsung beli di loket gedung.</p>
+                    <p class="text-sm text-gray-300 font-bold mb-6 flex items-center gap-2"><i class="fas fa-qrcode text-gold"></i> Pembayaran instan via QRIS tersedia.</p>
+                    <a href="https://wa.me/6281226518774" target="_blank" class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-4 rounded-2xl transition shadow-lg flex justify-center items-center gap-2">
+                        <i class="fab fa-whatsapp text-2xl"></i> Reservasi WhatsApp: 0812 2651 8774
+                    </a>
+                </div>
+
+                <div class="bg-black/85 backdrop-blur-xl rounded-3xl p-6 md:p-8 shadow-xl border border-gold/40 text-white">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-gold/20 rounded-full flex items-center justify-center text-gold text-xl shrink-0 border border-gold/30">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <h3 class="font-bold text-xl text-gold-bright">Harga Tiket Masuk (HTM)</h3>
+                    </div>
+                    <div class="space-y-4 text-sm mt-6">
+                        <div class="flex justify-between items-center border-b border-white/10 pb-4">
+                            <span class="text-gray-200 font-bold text-base">Wisatawan Lokal / Reguler</span>
+                            <span class="font-bold text-xl text-gold-bright bg-gold/20 px-5 py-2 rounded-xl border border-gold/30">Rp 20.000</span>
+                        </div>
+                        <div class="flex justify-between items-center pb-2">
+                            <span class="text-gray-200 font-bold text-base">Wisatawan Mancanegara (Asing)</span>
+                            <span class="font-bold text-xl text-gold-bright bg-gold/20 px-5 py-2 rounded-xl border border-gold/30">Rp 50.000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="galeri" class="py-16 md:py-24 relative bg-black/80 backdrop-blur-md border-y border-gold/20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+            <div class="mb-10 text-center">
+                <span class="text-gold text-xs font-bold uppercase tracking-widest bg-gold/10 px-4 py-1 rounded-full border border-gold/30">Dokumentasi Seni</span>
+                <h2 class="font-serif text-3xl md:text-5xl font-bold text-gold-bright mt-3 mb-3 drop-shadow-md">Galeri Pertunjukan</h2>
+                <p class="text-gray-200 text-sm md:text-base font-medium">Momen Pementasan Megah Wayang Orang Sriwedari</p>
+            </div>
+
+            <!-- New Gallery Images requested by user -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+                <div class="col-span-2 row-span-2 rounded-2xl overflow-hidden group relative shadow-2xl border-2 border-gold/40 h-56 md:h-full">
+                    <img src="https://iili.io/na2nmrX.jpg" alt="Pertunjukan 1" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                </div>
+                <div class="rounded-2xl overflow-hidden group relative h-36 md:h-52 shadow-xl border border-gold/30">
+                    <img src="https://iili.io/na2nDBI.jpg" alt="Pertunjukan 2" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                </div>
+                <div class="rounded-2xl overflow-hidden group relative h-36 md:h-52 shadow-xl border border-gold/30">
+                    <img src="https://iili.io/na2o97s.jpg" alt="Pertunjukan 3" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                </div>
+                <div class="rounded-2xl overflow-hidden group relative h-36 md:h-52 shadow-xl border border-gold/30">
+                    <img src="https://iili.io/na2ny2n.jpg" alt="Pertunjukan 4" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                </div>
+                <div class="rounded-2xl overflow-hidden group relative h-36 md:h-52 shadow-xl border border-gold/30">
+                    <img src="https://iili.io/na2oJpf.jpg" alt="Pertunjukan 5" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                </div>
+                <div class="col-span-2 md:col-span-2 rounded-2xl overflow-hidden group relative h-44 md:h-60 shadow-xl border border-gold/30">
+                    <img src="https://iili.io/na2o2I4.jpg" alt="Pertunjukan 6" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                </div>
+                <div class="col-span-2 md:col-span-2 rounded-2xl overflow-hidden group relative h-44 md:h-60 shadow-xl border border-gold/30">
+                    <img src="https://iili.io/na2o3hl.jpg" alt="Pertunjukan 7" class="w-full h-full object-cover object-top group-hover:scale-105 transition duration-500">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="fasilitas" class="py-16 md:py-24 relative">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+            <div class="mb-10 text-center">
+                <span class="text-gold text-xs font-bold uppercase tracking-widest bg-gold/10 px-4 py-1 rounded-full border border-gold/30">Kenyamanan Pengunjung</span>
+                <h2 class="font-serif text-3xl md:text-5xl font-bold text-gold-bright mt-3 mb-3 drop-shadow-md">Fasilitas Gedung</h2>
+                <p class="text-gray-200 text-sm md:text-base font-medium">Kemegahan dan Kelengkapan Area Sriwedari</p>
+            </div>
+
+            <!-- Facilities mapping exact requested image swaps -->
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+                <div class="bg-black/85 backdrop-blur-xl p-3 md:p-4 rounded-3xl border border-gold/40 shadow-xl text-white">
+                    <div class="rounded-2xl overflow-hidden h-32 md:h-48 mb-3 relative">
+                        <img src="https://iili.io/na9v3Ij.jpg" alt="Ruang Menonton Pagelaran" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                    </div>
+                    <h4 class="font-bold text-gold-bright text-sm md:text-base px-1">Ruang Menonton Pagelaran</h4>
+                    <p class="text-xs text-gray-300 px-1 mt-1">Megah dan berfasilitas lengkap untuk penonton.</p>
+                </div>
+                <div class="bg-black/85 backdrop-blur-xl p-3 md:p-4 rounded-3xl border border-gold/40 shadow-xl text-white">
+                    <div class="rounded-2xl overflow-hidden h-32 md:h-48 mb-3 relative">
+                        <img src="https://iili.io/na9vBEB.jpg" alt="Ruang Loket & Photobooth" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                    </div>
+                    <h4 class="font-bold text-gold-bright text-sm md:text-base px-1">Ruang Loket & Photobooth</h4>
+                    <p class="text-xs text-gray-300 px-1 mt-1">Area pemesanan tiket resmi dan swafoto.</p>
+                </div>
+                <div class="bg-black/85 backdrop-blur-xl p-3 md:p-4 rounded-3xl border border-gold/40 shadow-xl text-white">
+                    <div class="rounded-2xl overflow-hidden h-32 md:h-48 mb-3 relative">
+                        <img src="https://iili.io/na9vuTJ.jpg" alt="Ruang Tunggu VIP" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                    </div>
+                    <h4 class="font-bold text-gold-bright text-sm md:text-base px-1">Ruang Tunggu VIP</h4>
+                    <p class="text-xs text-gray-300 px-1 mt-1">Elegan, nyaman, dan ber-AC.</p>
+                </div>
+                <div class="bg-black/85 backdrop-blur-xl p-3 md:p-4 rounded-3xl border border-gold/40 shadow-xl text-white">
+                    <div class="rounded-2xl overflow-hidden h-32 md:h-48 mb-3 relative">
+                        <img src="https://iili.io/na9vqBV.jpg" alt="Lobby & Informasi" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                    </div>
+                    <h4 class="font-bold text-gold-bright text-sm md:text-base px-1">Lobby & Informasi</h4>
+                    <p class="text-xs text-gray-300 px-1 mt-1">Pusat informasi pengunjung yang luas.</p>
+                </div>
+                <div class="bg-black/85 backdrop-blur-xl p-3 md:p-4 rounded-3xl border border-gold/40 shadow-xl text-white">
+                    <div class="rounded-2xl overflow-hidden h-32 md:h-48 mb-3 relative">
+                        <img src="https://iili.io/na9vJku.jpg" alt="Gedung Wayang Orang" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                    </div>
+                    <h4 class="font-bold text-gold-bright text-sm md:text-base px-1">Gedung Wayang Orang</h4>
+                    <p class="text-xs text-gray-300 px-1 mt-1">Arsitektur klasik khas Surakarta.</p>
+                </div>
+                <div class="bg-black/85 backdrop-blur-xl p-3 md:p-4 rounded-3xl border border-gold/40 shadow-xl text-white">
+                    <div class="rounded-2xl overflow-hidden h-32 md:h-48 mb-3 relative">
+                        <img src="https://iili.io/na9vCrP.jpg" alt="Pintu Masuk Utama" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                    </div>
+                    <h4 class="font-bold text-gold-bright text-sm md:text-base px-1">Pintu Masuk Utama</h4>
+                    <p class="text-xs text-gray-300 px-1 mt-1">Akses utama yang megah bagi pengunjung.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-black border-t border-gold/40 py-10 text-center text-gray-400 text-xs md:text-sm relative z-10">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col items-center justify-center gap-3">
+            <div class="flex items-center gap-2 text-gold font-serif font-bold text-base">
+                <img src="https://api.iconify.design/mdi:crown.svg?color=%23FFD700" alt="Crown" class="w-5 h-5">
+                WAYANG ORANG SRIWEDARI SURAKARTA
+            </div>
+            <p>Panggung Budaya & Warisan Luhur Nusantara</p>
+            <p class="text-gray-500 mt-2">&copy; 2026 Pandu Sriwedari Digital. All Rights Reserved.</p>
+        </div>
+    </footer>
+
     <script>
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
+        function switchChar(charId) {
+            const contents = document.querySelectorAll('.char-content');
+            contents.forEach(content => content.classList.add('hidden'));
 
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
+            const tabs = document.querySelectorAll('.char-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('opacity-100');
+                tab.classList.add('opacity-50');
+                
+                const iconContainer = tab.querySelector('div');
+                iconContainer.classList.remove('bg-gold', 'text-black', 'border-white', 'font-bold');
+                iconContainer.classList.add('bg-black', 'text-gold', 'border-gold/50');
+                
+                const textSpan = tab.querySelector('span');
+                textSpan.classList.remove('font-bold', 'text-gold-bright');
+                textSpan.classList.add('font-medium', 'text-gray-300');
+            });
 
-        // Menutup menu otomatis setelah link diklik
-        document.querySelectorAll('.mobile-link').forEach(link => {
-            link.addEventListener('click', () => {
-                menu.classList.add('hidden');
+            const selectedContent = document.getElementById('content-' + charId);
+            if (selectedContent) selectedContent.classList.remove('hidden');
+
+            const selectedTab = document.getElementById('tab-' + charId);
+            if (selectedTab) {
+                selectedTab.classList.remove('opacity-50');
+                selectedTab.classList.add('opacity-100');
+                
+                const iconContainer = selectedTab.querySelector('div');
+                iconContainer.classList.remove('bg-black', 'text-gold', 'border-gold/50');
+                iconContainer.classList.add('bg-gold', 'text-black', 'border-white', 'font-bold');
+                
+                const textSpan = selectedTab.querySelector('span');
+                textSpan.classList.remove('font-medium', 'text-gray-300');
+                textSpan.classList.add('font-bold', 'text-gold-bright');
+            }
+        }
+        
+        function openModal(judul, tanggal, sinopsis) {
+            document.getElementById('modal-title').innerText = judul;
+            document.getElementById('modal-date').innerHTML = `<i class="far fa-calendar-alt"></i> ${tanggal}`;
+            document.getElementById('modal-desc').innerText = sinopsis;
+            
+            const modal = document.getElementById('synopsis-modal');
+            modal.classList.remove('hidden');
+        }
+        
+        function closeModal() {
+            document.getElementById('synopsis-modal').classList.add('hidden');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+            const menuIcon = mobileBtn.querySelector('i');
+
+            mobileBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                if (mobileMenu.classList.contains('hidden')) {
+                    menuIcon.classList.remove('fa-times');
+                    menuIcon.classList.add('fa-bars');
+                } else {
+                    menuIcon.classList.remove('fa-bars');
+                    menuIcon.classList.add('fa-times');
+                }
+            });
+
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    menuIcon.classList.remove('fa-times');
+                    menuIcon.classList.add('fa-bars');
+                });
             });
         });
     </script>
