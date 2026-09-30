@@ -635,3 +635,28 @@
     </script>
 </body>
 </html>
+                        H3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Script JavaScript untuk Tombol Hamburger Menu di HP -->
+    <script>
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Menutup menu otomatis setelah link diklik
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
